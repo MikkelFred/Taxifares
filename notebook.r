@@ -1,13 +1,11 @@
 
 # Loading the tidyverse
-# .... YOUR CODE FOR TASK 1 ....
 library(tidyverse)
 
 # Reading in the taxi data
 taxi <- read_csv('datasets/taxi.csv')
 
 # Taking a look at the first few rows in taxi
-# .... YOUR CODE FOR TASK 1 ....
 summary(taxi)
 
 library(testthat) 
@@ -17,11 +15,6 @@ run_tests({
     test_that("Test that tidyverse is loaded", {
         expect_true( "package:tidyverse" %in% search(), 
             info = "The tidyverse package should be loaded using library().")
-    })
-    
-    test_that("Read in data correctly.", {
-        expect_is(taxi, "tbl_df", 
-            info = 'You should use read_csv (with an underscore) to read "datasets/taxi.csv" into taxi.')
     })
     
     test_that("Read in data correctly.", {
@@ -46,15 +39,15 @@ mutate(
 run_tests({
     test_that("rename lat", {
         expect_true(!is.null(taxi$lat), 
-            info = "The taxi data frame does not contain a variable called lat. You need to rename pickup_latitude.")
+            info = "The taxi data frame does not contain a variable called lat.")
     })
     test_that("rename long", {
         expect_true(!is.null(taxi$long), 
-            info = "The taxi data frame does not contain a variable called long. You need to rename pickup_longitude.")
+            info = "The taxi data frame does not contain a variable called long. ")
     })
     test_that("total exists", {
         expect_true(!is.null(taxi$total), 
-            info = "The taxi data frame does not contain a variable called total. You need to create this as the logarithm (use the log() function) of the sum of fare_amount and tip_amount.")
+            info = "The taxi data frame does not contain a variable called total.")
     })
     test_that("Modified data correctly.", {
         taxi_temp <- read_csv('datasets/taxi.csv') %>%
@@ -62,7 +55,7 @@ run_tests({
             filter(fare_amount > 0 | tip_amount > 0) %>%
             mutate(total = log(fare_amount + tip_amount) )
         expect_equivalent(taxi, taxi_temp, 
-            info = 'The taxi dataframe has not been modified correctly. See if you can find something is wrong with your code.')
+            info = 'The taxi dataframe has not been modified correctly. ')
     })
 })
 
@@ -78,12 +71,11 @@ filter(between(long, -74.025, -73.93))
 run_tests({
   test_that("The correct number of rows have been filtered away", {
       expect_equal(45766, nrow(taxi), 
-      info = "It seems you haven't filter away the taxi trips outside of Manhattan correctly.")
+      info = "")
   })
 })
 
 # Loading in ggmap and viridis for nice colors
-# .... YOUR CODE FOR TASK 4 ....
 library(ggmap)
 library(viridis)
 
@@ -117,7 +109,7 @@ run_tests({
         }))
 
         expect_true("StatBin2d" %in% stat_classes, 
-            info = "You need to use geom_bin2d correctly to draw the map.")
+            info = "")
     })
 })
 
@@ -162,15 +154,15 @@ run_tests({
     })
     test_that("hour is correct", {
         expect_equivalent(taxi$hour[1], 10L, 
-            info = "The `hour` column doesn't seem to be correct. Check the hint for more help.")
+            info = "The `hour` column doesn't seem to be correct.")
     })
     test_that("wday is correct", {
         expect_true(taxi$wday[1] == "Sun", 
-            info = "The `wday` column doesn't seem to be correct. Check the hint for more help.")
+            info = "The `wday` column doesn't seem to be correct. ")
     })
     test_that("month is correct", {
         expect_true(taxi$month[1] == "Jan", 
-            info = "The `month` column doesn't seem to be correct. Check the hint for more help.")
+            info = "The `month` column doesn't seem to be correct.")
     })
 })
 
@@ -189,12 +181,11 @@ run_tests({
   test_that("The tree has been fitted correctly", {
       correctly_fitted_tree <- tree(total ~ lat + long + hour + wday + month, data = taxi)
       expect_equivalent(fitted_tree, correctly_fitted_tree, 
-      info = "It seem you didn't fit the tree correctly. Check the hint, it might help!")
+      info = "")
   })
 })
 
 # Loading in the randomForest package
-# .... YOUR CODE FOR TASK 8 HERE ....
 
 library(randomForest)
 
@@ -219,7 +210,7 @@ run_tests({
         keywords <- c("total", "lat", "long", "hour", "wday", "month",
                       "ntree", "sampsize", "100")
         expect_true(all(str_detect(call_string, keywords)), 
-            info = "You have not called randomForest correctly. Did you include all the predictors and the right output variable?.")
+            info = "")
     })
 })
 
@@ -276,7 +267,7 @@ run_tests({
         }))
         expect_true(any(str_detect(p_variables, "total")) & 
                    !any(str_detect(p_variables, "pred_total")), 
-            info = "You need to connect total to z in the aes() call correctly. Make sure you are not still using pred_total.")
+            info = "")
     })
 })
 
